@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Merry Christmas 🎄</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        background: radial-gradient(circle at top, #0a1a2f, #000814);
+        overflow: hidden;
+        color: #fff;
+    }
+
+    /* ===== Tuyết rơi ===== */
+    .snow {
+        position: fixed;
+        top: -10px;
+        width: 6px;
+        height: 6px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh);
+        }
+    }
+
+    /* ===== Container ===== */
+    .container {
+        position: relative;
+        z-index: 10;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* ===== Cây thông ===== */
+    .tree {
+        position: relative;
+        width: 0;
+        height: 0;
+        margin-bottom: 20px;
+        animation: drawTree 2.5s ease forwards;
+    }
+
+    .layer {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 80px solid transparent;
+        border-right: 80px solid transparent;
+        border-bottom: 120px solid #0f5132;
+        opacity: 0;
+        animation: appear 1s forwards;
+    }
+
+    .layer:nth-child(1) { top: 0; animation-delay: 0.5s; }
+    .layer:nth-child(2) { top: 60px; border-bottom-width: 140px; animation-delay: 1s; }
+    .layer:nth-child(3) { top: 130px; border-bottom-width: 160px; animation-delay: 1.5s; }
+
+    @keyframes appear {
+        to { opacity: 1; }
+    }
+
+    /* ===== Đèn trang trí ===== */
+    .light {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        animation: blink 1.5s infinite alternate;
+    }
+
+    @keyframes blink {
+        from { opacity: 0.3; }
+        to { opacity: 1; }
+    }
+
+    /* ===== Hộp quà ===== */
+    .gift {
+        margin-top: 20px;
+        width: 120px;
+        height: 120px;
+        background: #c1121f;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.5s;
+    }
+
+    .gift:hover {
+        transform: scale(1.05);
+    }
+
+    .gift::before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 120px;
+        background: gold;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .gift::after {
+        content: '';
+        position: absolute;
+        height: 20px;
+        width: 120px;
+        background: gold;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* ===== Lời chúc ===== */
+    .message {
+        margin-top: 30px;
+        font-size: 20px;
+        text-align: center;
+        min-height: 80px;
+        max-width: 500px;
+        line-height: 1.6;
+        white-space: pre-line;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Cây thông -->
+    <div class="tree">
+        <div class="layer"></div>
+        <div class="layer"></div>
+        <div class="layer"></div>
+
+        <!-- Đèn -->
+        <div class="light" style="top:40px; left:-30px; background:red;"></div>
+        <div class="light" style="top:80px; left:20px; background:yellow;"></div>
+        <div class="light" style="top:120px; left:-10px; background:cyan;"></div>
+        <div class="light" style="top:160px; left:30px; background:pink;"></div>
+    </div>
+
+    <!-- Quà -->
+    <div class="gift" onclick="openGift()"></div>
+
+    <!-- Lời chúc -->
+    <div class="message" id="message"></div>
+
+</div>
+
+<script>
+    /* ===== Tạo tuyết ===== */
+    for (let i = 0; i < 80; i++) {
+        const snow = document.createElement('div');
+        snow.className = 'snow';
+        snow.style.left = Math.random() * window.innerWidth + 'px';
+        snow.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        snow.style.opacity = Math.random();
+        snow.style.transform = `scale(${Math.random()})`;
+        document.body.appendChild(snow);
+    }
+
+    /* ===== Hiệu ứng gõ chữ ===== */
+    const text = 
+`🎄 Merry Christmas 🎄
+
+Gửi đến cô gái đặc biệt nhất 🎁
+Chúc em một mùa Giáng Sinh thật ấm áp,
+luôn mỉm cười thật xinh và gặp thật nhiều điều may mắn ✨
+
+Mong rằng trong những ngày đông lạnh này,
+sẽ luôn có ai đó quan tâm em…
+và người đó, anh hy vọng là anh 💝`;
+
+    let index = 0;
+    function typeWriter() {
+        if (index < text.length) {
+            document.getElementById("message").innerHTML += text.charAt(index);
+            index++;
+            setTimeout(typeWriter, 50);
+        }
+    }
+
+    /* ===== Mở quà ===== */
+    function openGift() {
+        document.querySelector('.gift').style.display = 'none';
+        typeWriter();
+    }
+</script>
+
+</body>
+</html>
